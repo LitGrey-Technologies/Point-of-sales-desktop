@@ -1,22 +1,26 @@
-﻿using System.Collections.Generic;
-using System.Data;
-using System.Threading.Tasks;
+﻿using Pos.App.Desktop.Abstracts;
 using Pos.App.Desktop.Models;
 using Pos.App.Desktop.Services.Abstracts;
+using System.Collections.Generic;
+using System.Data;
+using System.Threading.Tasks;
 
 namespace Pos.App.Desktop.Services
 {
-    public interface IProductSaleService:IGenericService<ProductSale>
+    public interface IProductSaleService : IGenericService<ProductSale>
     {
-        void GenerateInvoice(List<ProductSale> saleItems);
+        Task<bool> GenerateInvoice(List<ProductSale> saleItems, int noOfItems, double totalAmount);
     }
     public class ProductSaleService : IProductSaleService
     {
         private readonly ITupleDetailsService _tupleDetailsService;
-
-        public ProductSaleService(ITupleDetailsService tupleDetailsService)
+        private readonly GenericRepository _dbContext;
+        private readonly IProductService _productService;
+        public ProductSaleService()
         {
-            _tupleDetailsService = tupleDetailsService;
+            _dbContext = new GenericRepository();
+            _productService=new ProductService();
+            _tupleDetailsService = new TupleDetailsService();
         }
         public Task<bool> SaveAsync(ProductSale model)
         {
@@ -43,11 +47,30 @@ namespace Pos.App.Desktop.Services
             return null;
         }
 
-        public async void GenerateInvoice(List<ProductSale> saleItems)
+        public async Task<bool> GenerateInvoice(List<ProductSale> saleItems,int noOfItems,double totalAmount)
         {
             var invoiceNumber = await _tupleDetailsService.GetCount(TupleNames.CustomerInvoice);
-            
+            var invoiceDetailNumber = await _tupleDetailsService.GetCount(TupleNames.CustomerInvoiceDetails);
             invoiceNumber++;
+            var customerId = saleItems[0].CustomerId;
+
+            var invoiceQuery = $"INSERT INTO `ps_cus_invoice` VALUES ('{invoiceNumber}','','{customerId}','{totalAmount}','{noOfItems}');";
+            await _dbContext.ExecuteQueryAsync(invoiceQuery);
+            await Task.Delay(100);
+
+            foreach (var item in saleItems)
+            {
+                invoiceDetailNumber++;
+                var invoiceDetailQuery = $"INSERT INTO `ps_cus_inovoice_details` VALUES ('{invoiceDetailNumber}','{invoiceNumber}','{item.ProductId}','{item.Amount}','{item.Qty}');";
+                await _dbContext.ExecuteQueryAsync(invoiceDetailQuery);
+                await Task.Delay(100);
+                await _productService.UpdateQty(item.ProductId, item.Qty);
+                await Task.Delay(100);
+            }
+            
+
+            await _tupleDetailsService.UpdateCount(TupleNames.CustomerInvoice, invoiceNumber);
+            return await _tupleDetailsService.UpdateCount(TupleNames.CustomerInvoiceDetails, invoiceDetailNumber);
 
         }
     }

@@ -13,6 +13,7 @@ namespace Pos.App.Desktop.Services
         Task<ObservableCollection<NameValuePair>> GetLookUps();
         Task<int> GetProductPrice(string productId);
         Task<int> GetProductQty(string productId);
+        Task<bool> UpdateQty(string productId, string qty);
     }
 
     public class ProductService : IProductService
@@ -77,6 +78,15 @@ namespace Pos.App.Desktop.Services
                 return Convert.ToInt32(result.Rows[0].ItemArray[0]);
             }
             return -1;
+        }
+
+        public async Task<bool> UpdateQty(string productId, string qty)
+        {
+            var inStock = await GetProductQty(productId);
+            await Task.Delay(100);
+            var newStock = inStock - Convert.ToInt32(qty);
+            var query = $"UPDATE `ps_gp_products` SET `qty` = '{newStock}' WHERE `productId` = '{productId}';";
+            return await _dbContext.ExecuteQueryAsync(query);
         }
     }
 }

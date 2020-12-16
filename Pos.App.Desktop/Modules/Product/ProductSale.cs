@@ -12,7 +12,7 @@ namespace Pos.App.Desktop.Modules.Product
         private readonly IProductService _productService;
         private readonly IProductSaleService _productSaleService;
         private readonly ICustomerService _customerService;
-        private readonly List<Models.ProductSale> _purchaseProduct;
+        private readonly List<Models.ProductSale> _saleProduct;
         private int _noOfItems = 0;
         private double _totalAmount = 0;
 
@@ -22,7 +22,7 @@ namespace Pos.App.Desktop.Modules.Product
             _productService = new ProductService();
             _productSaleService = new ProductSaleService();
             _customerService = new CustomerService();
-            _purchaseProduct = new List<Models.ProductSale>();
+            _saleProduct = new List<Models.ProductSale>();
             ViewLoadedAsync();
         }
 
@@ -80,7 +80,7 @@ namespace Pos.App.Desktop.Modules.Product
                 }
                 var amount = Convert.ToInt32(txtQty.Text) * Convert.ToInt32(txtUnitPrice.Text);
                 metroGrid1.Rows.Add(cmbProduct.Text, txtQty.Text, txtUnitPrice.Text, amount, cmbCustomer.Text);
-                _purchaseProduct.Add(new Models.ProductSale
+                _saleProduct.Add(new Models.ProductSale
                 {
                     CustomerId = cmbCustomer.SelectedValue.ToString(),
                     ProductId = cmbProduct.SelectedValue.ToString(),
@@ -98,7 +98,7 @@ namespace Pos.App.Desktop.Modules.Product
         private async void metroButton2_Click_1(object sender, EventArgs e)
         {
             IsBusy = true;
-            var response = await _productSaleService.SaveAsync(null);
+            var response = await _productSaleService.GenerateInvoice(_saleProduct,_noOfItems,_totalAmount);
             if (response)
             {
                 MessageDialog.Information("Saved SuccessFully.");

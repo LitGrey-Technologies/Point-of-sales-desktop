@@ -110,6 +110,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abstracts\Defaults.cs" />
     <Compile Include="Abstracts\Forms\BaseForm.cs">
       <SubType>Form</SubType>
     </Compile>
