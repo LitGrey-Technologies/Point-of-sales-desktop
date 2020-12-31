@@ -15,7 +15,7 @@ namespace Pos.App.Desktop.Abstracts.Forms
         public void ViewLoadedAsync()
         {
             IsBusy = true;
-            OnViewLoadedAsyncExecute(); 
+            OnViewLoadedAsyncExecute();
             IsBusy = false;
         }
 

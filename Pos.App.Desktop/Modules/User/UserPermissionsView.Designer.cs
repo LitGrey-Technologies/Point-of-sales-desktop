@@ -32,7 +32,6 @@ namespace Pos.App.Desktop.Modules.User
             this.metroComboBox1 = new MetroFramework.Controls.MetroComboBox();
             this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
             this.metroButton1 = new MetroFramework.Controls.MetroButton();
-            this.metroButton2 = new MetroFramework.Controls.MetroButton();
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.SuspendLayout();
             // 
@@ -59,23 +58,13 @@ namespace Pos.App.Desktop.Modules.User
             // 
             // metroButton1
             // 
-            this.metroButton1.Location = new System.Drawing.Point(440, 76);
+            this.metroButton1.Location = new System.Drawing.Point(357, 77);
             this.metroButton1.Name = "metroButton1";
             this.metroButton1.Size = new System.Drawing.Size(75, 23);
             this.metroButton1.TabIndex = 2;
             this.metroButton1.Text = "Save";
             this.metroButton1.UseSelectable = true;
             this.metroButton1.Click += new System.EventHandler(this.metroButton1_Click);
-            // 
-            // metroButton2
-            // 
-            this.metroButton2.Location = new System.Drawing.Point(358, 76);
-            this.metroButton2.Name = "metroButton2";
-            this.metroButton2.Size = new System.Drawing.Size(75, 23);
-            this.metroButton2.TabIndex = 2;
-            this.metroButton2.Text = "Fetch";
-            this.metroButton2.UseSelectable = true;
-            this.metroButton2.Click += new System.EventHandler(this.metroButton2_Click);
             // 
             // treeView1
             // 
@@ -84,19 +73,17 @@ namespace Pos.App.Desktop.Modules.User
             this.treeView1.Name = "treeView1";
             this.treeView1.Size = new System.Drawing.Size(473, 236);
             this.treeView1.TabIndex = 3;
-           
             // 
-            // UserPermissions
+            // UserPermissionsView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(564, 394);
             this.Controls.Add(this.treeView1);
-            this.Controls.Add(this.metroButton2);
             this.Controls.Add(this.metroButton1);
             this.Controls.Add(this.metroLabel1);
             this.Controls.Add(this.metroComboBox1);
-            this.Name = "UserPermissions";
+            this.Name = "UserPermissionsView";
             this.Resizable = true;
             this.Text = "User Permissions";
             this.ResumeLayout(false);
@@ -109,7 +96,6 @@ namespace Pos.App.Desktop.Modules.User
         private MetroFramework.Controls.MetroComboBox metroComboBox1;
         private MetroFramework.Controls.MetroLabel metroLabel1;
         private MetroFramework.Controls.MetroButton metroButton1;
-        private MetroFramework.Controls.MetroButton metroButton2;
         private System.Windows.Forms.TreeView treeView1;
     }
 }

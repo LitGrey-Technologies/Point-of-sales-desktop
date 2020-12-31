@@ -10,6 +10,8 @@ namespace Pos.App.Desktop.Services
     public interface ICustomerService : IGenericService<Customer>
     {
         Task<ObservableCollection<NameValuePair>> GetLookUps();
+        Task<DataTable> CustomerHistory(string customerId);
+        Task<DataTable> CustomerHistoryDetails(string invoiceId);
     }
     public class CustomerService : ICustomerService
     {
@@ -54,6 +56,18 @@ namespace Pos.App.Desktop.Services
         {
             var query = "SELECT (customerId),(name) FROM ps_cus_customer where active='1';";
             return _dbContext.GetNamedValuePairObservableCollectionLookUpsAsync(query);
+        }
+
+        public Task<DataTable> CustomerHistory(string customerId)
+        {
+            var query = $"SELECT (InvoiceId),(Amount),(NoOfItemPurchased) as Total_Purchased_Items FROM ps_cus_invoice where `CustomerId`='{customerId}';";
+            return _dbContext.GetAllAsync(query);
+        }
+
+        public Task<DataTable> CustomerHistoryDetails(string invoiceId)
+        {
+            var query = $"SELECT (InvoiceId),(Amount),(NoOfItemPurchased) as Total_Purchased_Items FROM ps_cus_invoice where InvoiceId='{invoiceId}';";
+            return _dbContext.GetAllAsync(query);
         }
     }
 }

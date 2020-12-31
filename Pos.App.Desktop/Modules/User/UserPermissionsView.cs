@@ -16,15 +16,15 @@ namespace Pos.App.Desktop.Modules.User
             InitializeComponent();
             _userRegistrationService = new UserRegistrationService();
             _permissionsManger = new UserPermissionsViewManger();
+            OnViewLoadedAsyncExecute();
         }
 
-        private async void metroButton2_Click(object sender, EventArgs e)
+        protected override async void OnViewLoadedAsyncExecute()
         {
             IsBusy = true;
             var users = await _userRegistrationService.GetLookUpsAsync();
             SetDataSource(metroComboBox1, users);
             treeView1 = await _permissionsManger.OnLoadMenuItems(treeView1);
-            metroButton2.Enabled = false;
             metroComboBox1.SelectedIndex = -1;
             IsBusy = false;
         }
@@ -49,6 +49,7 @@ namespace Pos.App.Desktop.Modules.User
         private async void metroButton1_Click(object sender, EventArgs e)
         {
             IsBusy = true;
+            metroButton1.Enabled = false;
             var id = metroComboBox1.SelectedValue as string;
             var results = await _permissionsManger.OnSaveAsync(id);
             if (results)
@@ -59,6 +60,7 @@ namespace Pos.App.Desktop.Modules.User
             {
                 MessageDialog.Error("Something went wrong.");
             }
+            metroButton1.Enabled = true;
             IsBusy = false;
         }
     }

@@ -19,7 +19,7 @@ namespace Pos.App.Desktop.Services
 
         public Task<DataTable> GetStock()
         {
-            var query = "SELECT (productId),(qty) FROM ps_gp_products where active='1'";
+            var query = "SELECT (description),(qty) FROM ps_gp_products where active='1'";
             return _dbContext.GetAllAsync(query);
         }
     }

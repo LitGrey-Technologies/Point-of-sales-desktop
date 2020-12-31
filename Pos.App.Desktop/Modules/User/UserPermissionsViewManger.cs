@@ -20,6 +20,7 @@ namespace Pos.App.Desktop.Modules.User
 
         public async Task<TreeView> OnSelectionChanged(TreeView treeView, string id)
         {
+            _ids.Clear();
             var dataTable = await _userAccessService.GetUserLevelMenuAsync(id);
             treeView.SetCheckBoxStatusForAllNodes(false);
             foreach (DataRow row in dataTable.Rows)

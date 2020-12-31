@@ -1,53 +1,34 @@
-﻿using Pos.App.Desktop.Abstracts;
+﻿using System;
+using Pos.App.Desktop.Abstracts;
 using Pos.App.Desktop.Models;
 using Pos.App.Desktop.Services.Abstracts;
 using System.Collections.Generic;
-using System.Data;
+using System.Globalization;
 using System.Threading.Tasks;
 
 namespace Pos.App.Desktop.Services
 {
-    public interface IProductSaleService : IGenericService<ProductSale>
+    public interface IProductSaleService
     {
         Task<bool> GenerateInvoice(List<ProductSale> saleItems, int noOfItems, double totalAmount);
     }
+
     public class ProductSaleService : IProductSaleService
     {
         private readonly ITupleDetailsService _tupleDetailsService;
         private readonly GenericRepository _dbContext;
         private readonly IProductService _productService;
+        private readonly IAccountTransactionService _transactionService;
         public ProductSaleService()
         {
             _dbContext = new GenericRepository();
-            _productService=new ProductService();
+            _productService = new ProductService();
+            _transactionService = new AccountTransactionService();
             _tupleDetailsService = new TupleDetailsService();
         }
-        public Task<bool> SaveAsync(ProductSale model)
-        {
-            return null;
-        }
 
-        public Task<bool> UpdateAsync(ProductSale model)
-        {
-            return null;
-        }
 
-        public Task<bool> DeleteAsync(string id)
-        {
-            return null;
-        }
-
-        public Task<DataTable> SearchAsync(string criteria)
-        {
-            return null;
-        }
-
-        public Task<DataTable> GetAllAsync()
-        {
-            return null;
-        }
-
-        public async Task<bool> GenerateInvoice(List<ProductSale> saleItems,int noOfItems,double totalAmount)
+        public async Task<bool> GenerateInvoice(List<ProductSale> saleItems, int noOfItems, double totalAmount)
         {
             var invoiceNumber = await _tupleDetailsService.GetCount(TupleNames.CustomerInvoice);
             var invoiceDetailNumber = await _tupleDetailsService.GetCount(TupleNames.CustomerInvoiceDetails);
@@ -67,11 +48,11 @@ namespace Pos.App.Desktop.Services
                 await _productService.UpdateQty(item.ProductId, item.Qty);
                 await Task.Delay(100);
             }
-            
+
+            await _transactionService.IncomeTransaction(Convert.ToInt32(totalAmount).ToString(), invoiceNumber.ToString());
 
             await _tupleDetailsService.UpdateCount(TupleNames.CustomerInvoice, invoiceNumber);
             return await _tupleDetailsService.UpdateCount(TupleNames.CustomerInvoiceDetails, invoiceDetailNumber);
-
         }
     }
 }

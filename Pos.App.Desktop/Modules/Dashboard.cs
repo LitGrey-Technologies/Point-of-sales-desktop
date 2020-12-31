@@ -98,7 +98,7 @@ namespace Pos.App.Desktop.Modules
                     }
                 case "cus_dir":
                     {
-                        SelectedView(new StockView());
+                        SelectedView(new CustomerHistory());
                         break;
                     }
                 case "prd_purc":

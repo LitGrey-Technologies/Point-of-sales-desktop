@@ -134,6 +134,8 @@
       <DependentUpon>ViewBase.cs</DependentUpon>
     </Compile>
     <Compile Include="Abstracts\ViewClearExtension.cs" />
+    <Compile Include="Models\Account.cs" />
+    <Compile Include="Models\AccountTransaction.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\Login.cs" />
     <Compile Include="Models\Product.cs" />
@@ -144,6 +146,18 @@
     <Compile Include="Models\UserPermission.cs" />
     <Compile Include="Models\UserRole.cs" />
     <Compile Include="Models\Vendor.cs" />
+    <Compile Include="Modules\Customer\CustomerHistory.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modules\Customer\CustomerHistory.Designer.cs">
+      <DependentUpon>CustomerHistory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Customer\CustomerHistoryDetails.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modules\Customer\CustomerHistoryDetails.Designer.cs">
+      <DependentUpon>CustomerHistoryDetails.cs</DependentUpon>
+    </Compile>
     <Compile Include="Modules\Customer\CustomerRegistration.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -222,6 +236,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Abstracts\IGenericService.cs" />
     <Compile Include="Services\Abstracts\TupleNames.cs" />
+    <Compile Include="Services\AccountService.cs" />
+    <Compile Include="Services\AccountTransactionService.cs" />
     <Compile Include="Services\AuthenticationService.cs" />
     <Compile Include="Services\CustomerService.cs" />
     <Compile Include="Services\ProductCategoryService.cs" />
@@ -242,6 +258,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Abstracts\Forms\ViewBase.resx">
       <DependentUpon>ViewBase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\Customer\CustomerHistory.resx">
+      <DependentUpon>CustomerHistory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\Customer\CustomerHistoryDetails.resx">
+      <DependentUpon>CustomerHistoryDetails.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Modules\Customer\CustomerRegistration.resx">
       <DependentUpon>CustomerRegistration.cs</DependentUpon>
@@ -317,6 +339,9 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Dump20201221.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

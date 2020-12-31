@@ -1,7 +1,7 @@
-﻿using System;
-using Pos.App.Desktop.Abstracts;
+﻿using Pos.App.Desktop.Abstracts;
 using Pos.App.Desktop.Models;
 using Pos.App.Desktop.Services.Abstracts;
+using System;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Threading.Tasks;
@@ -14,6 +14,7 @@ namespace Pos.App.Desktop.Services
         Task<int> GetProductPrice(string productId);
         Task<int> GetProductQty(string productId);
         Task<bool> UpdateQty(string productId, string qty);
+        Task<bool> UpdateQtyAndPrice(string productId, string newQty, string newPrice);
     }
 
     public class ProductService : IProductService
@@ -84,8 +85,17 @@ namespace Pos.App.Desktop.Services
         {
             var inStock = await GetProductQty(productId);
             await Task.Delay(100);
-            var newStock = inStock - Convert.ToInt32(qty);
+            var newStock = inStock + Convert.ToInt32(qty);
             var query = $"UPDATE `ps_gp_products` SET `qty` = '{newStock}' WHERE `productId` = '{productId}';";
+            return await _dbContext.ExecuteQueryAsync(query);
+        }
+
+        public async Task<bool> UpdateQtyAndPrice(string productId, string newQty, string newPrice)
+        {
+            var inStock = await GetProductQty(productId);
+            await Task.Delay(100);
+            var newStock = inStock + Convert.ToInt32(newQty);
+            var query = $"UPDATE `ps_gp_products` SET `qty` = '{newStock}' , `price`= '{newPrice}' WHERE `productId` = '{productId}';";
             return await _dbContext.ExecuteQueryAsync(query);
         }
     }

@@ -7,5 +7,7 @@
         public static string VendorInvoiceDetails = "VENDOR-INVOICE-DETAILS";
         public static string CustomerInvoice = "CUSTOMER-INVOICE";
         public static string CustomerInvoiceDetails = "CUSTOMER-INVOICE-DETAILS";
+        public static string Account = "ACCOUNT";
+        public static string AccountTransaction = "ACCOUNT-TRANSACTION";
     }
 }
