@@ -28,46 +28,46 @@ namespace Pos.App.Desktop.Services
             return _dbContext.ExecuteQueryAsync(query);
         }
 
-        public Task<bool> UpdateAsync(Customer model)
+        public async Task<bool> UpdateAsync(Customer model)
         {
             var query = $"UPDATE `ps_cus_customer` SET `name` = '{model.Name}',`contact_number` = '{model.Contact}',`addresss` = '{model.Address}',`email` = '{model.Email}', `active`='{model.Active}' WHERE `customerId` = '{model.CustomerId}';";
-            return _dbContext.ExecuteQueryAsync(query);
+            return await _dbContext.ExecuteQueryAsync(query);
         }
 
-        public Task<bool> DeleteAsync(string id)
+        public async Task<bool> DeleteAsync(string id)
         {
             var query = $"DELETE FROM ps_cus_customer WHERE customerId='{id}'";
-            return _dbContext.ExecuteQueryAsync(query);
+            return await _dbContext.ExecuteQueryAsync(query);
         }
 
-        public Task<DataTable> SearchAsync(string criteria)
+        public async Task<DataTable> SearchAsync(string criteria)
         {
             var query = $"SELECT (customerId),(name),(contact_number),(addresss),(email),(IF(active=1,'YES','NO')) AS active FROM ps_cus_customer where name like '%{criteria}%';";
-            return _dbContext.GetAllAsync(query);
+            return await _dbContext.GetAllAsync(query);
         }
 
-        public Task<DataTable> GetAllAsync()
+        public async Task<DataTable> GetAllAsync()
         {
             var query = "SELECT (customerId),(name),(contact_number),(addresss),(email),(IF(active=1,'YES','NO')) AS active FROM ps_cus_customer;";
-            return _dbContext.GetAllAsync(query);
+            return await _dbContext.GetAllAsync(query);
         }
 
-        public Task<ObservableCollection<NameValuePair>> GetLookUps()
+        public async Task<ObservableCollection<NameValuePair>> GetLookUps()
         {
             var query = "SELECT (customerId),(name) FROM ps_cus_customer where active='1';";
-            return _dbContext.GetNamedValuePairObservableCollectionLookUpsAsync(query);
+            return await _dbContext.GetNamedValuePairObservableCollectionLookUpsAsync(query);
         }
 
-        public Task<DataTable> CustomerHistory(string customerId)
+        public async Task<DataTable> CustomerHistory(string customerId)
         {
             var query = $"SELECT (InvoiceId),(Amount),(NoOfItemPurchased) as Total_Purchased_Items FROM ps_cus_invoice where `CustomerId`='{customerId}';";
-            return _dbContext.GetAllAsync(query);
+            return await _dbContext.GetAllAsync(query);
         }
 
-        public Task<DataTable> CustomerHistoryDetails(string invoiceId)
+        public async Task<DataTable> CustomerHistoryDetails(string invoiceId)
         {
             var query = $"SELECT (InvoiceId),(Amount),(NoOfItemPurchased) as Total_Purchased_Items FROM ps_cus_invoice where InvoiceId='{invoiceId}';";
-            return _dbContext.GetAllAsync(query);
+            return await _dbContext.GetAllAsync(query);
         }
     }
 }

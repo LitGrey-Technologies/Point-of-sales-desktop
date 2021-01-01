@@ -111,6 +111,11 @@ namespace Pos.App.Desktop.Modules
                         SelectedView(new ProductSale());
                         break;
                     }
+                case "vn_his":
+                    {
+                        SelectedView(new VendorHistory());
+                        break;
+                    }
             }
             IsBusy = false;
         }

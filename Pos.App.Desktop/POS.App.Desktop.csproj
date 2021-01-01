@@ -225,6 +225,18 @@
     <Compile Include="Modules\User\UserRoleView.Designer.cs">
       <DependentUpon>UserRoleView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Modules\Vendor\VendorHistory.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modules\Vendor\VendorHistory.Designer.cs">
+      <DependentUpon>VendorHistory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Vendor\VendorHistoryDetails.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modules\Vendor\VendorHistoryDetails.Designer.cs">
+      <DependentUpon>VendorHistoryDetails.cs</DependentUpon>
+    </Compile>
     <Compile Include="Modules\Vendor\VendorRegistrationView.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -297,6 +309,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Modules\User\UserRoleView.resx">
       <DependentUpon>UserRoleView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\Vendor\VendorHistory.resx">
+      <DependentUpon>VendorHistory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\Vendor\VendorHistoryDetails.resx">
+      <DependentUpon>VendorHistoryDetails.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Modules\Vendor\VendorRegistrationView.resx">
       <DependentUpon>VendorRegistrationView.cs</DependentUpon>
