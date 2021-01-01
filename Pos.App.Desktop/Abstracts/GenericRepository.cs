@@ -1,4 +1,5 @@
 ﻿using MySqlConnector;
+using System;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Threading.Tasks;
@@ -56,6 +57,16 @@ namespace Pos.App.Desktop.Abstracts
             await _connection.CloseAsync();
             return dataTable;
         }
+
+        public async Task<int> GetCount(string query)
+        {
+            var data = await FindAsync(query);
+            if (data.Rows.Count > 0)
+            {
+                return Convert.ToInt32(data.Rows[0].ItemArray[0]);
+            }
+            return 0;
+        }
         public async Task<bool> ExecuteQueryAsync(string query)
         {
             _connection = new MySqlConnection(_connectionString);
@@ -72,11 +83,11 @@ namespace Pos.App.Desktop.Abstracts
         {
             if (_connection.State == ConnectionState.Open)
             {
-                 _connection.Close();
+                _connection.Close();
             }
             if (_connection.State == ConnectionState.Closed)
             {
-               _connection.Open();
+                _connection.Open();
             }
             return _connection.State == ConnectionState.Open;
         }

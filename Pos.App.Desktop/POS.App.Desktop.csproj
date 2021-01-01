@@ -252,6 +252,7 @@
     <Compile Include="Services\AccountTransactionService.cs" />
     <Compile Include="Services\AuthenticationService.cs" />
     <Compile Include="Services\CustomerService.cs" />
+    <Compile Include="Services\DashboardService.cs" />
     <Compile Include="Services\ProductCategoryService.cs" />
     <Compile Include="Services\ProductPurchaseService.cs" />
     <Compile Include="Services\ProductSaleService.cs" />

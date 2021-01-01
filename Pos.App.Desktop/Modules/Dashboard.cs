@@ -16,12 +16,22 @@ namespace Pos.App.Desktop.Modules
     public partial class Dashboard : BaseForm
     {
         private readonly IAuthenticationService _service;
+        private readonly IDashboardService _dashboardService;
         public Dashboard()
         {
             InitializeComponent();
             _service = new AuthenticationService();
+            _dashboardService = new DashboardService();
+            GetCounts();
         }
 
+        private async void GetCounts()
+        {
+            UserTile.TileCount = await _dashboardService.GetTotalUsers();
+            ExpenseTile.TileCount = await _dashboardService.GetTotalExpense();
+            IncomeTile.TileCount = await _dashboardService.GetTotalIncome();
+            TransactionTile.TileCount = await _dashboardService.GetTotalTransactions();
+        }
         public async Task SetModules(DataTable dataTable)
         {
             await Task.Run(() =>
