@@ -26,19 +26,20 @@ namespace Pos.App.Desktop.Services
 
         public async Task<int> GetTotalTransactions()
         {
-            var query = "SELECT Count(*) as total FROM ps_ac_accounttransaction where date between CURDATE() - INTERVAL 30 DAY AND CURDATE();";
+            //var query = "SELECT Count(*) as total FROM ps_ac_accounttransaction where date between CURDATE() - INTERVAL 30 DAY AND CURDATE();";
+            var query = "SELECT Count(*) as total FROM ps_ac_accounttransaction";
             return await _dbContext.GetCount(query);
         }
 
         public async Task<int> GetTotalIncome()
         {
-            var query = "SELECT sum(amount) as Total_transactions,(if(accountId=1,'INCOME','EXPENSE')) AS transaction_type FROM ps_ac_accounttransaction where accountId=1 and date between CURDATE() - INTERVAL 30 DAY AND CURDATE();";
+            var query = "SELECT sum(amount) as Total_transactions,(if(accountId=1,'INCOME','EXPENSE')) AS transaction_type FROM ps_ac_accounttransaction where accountId=1;";
             return await _dbContext.GetCount(query);
         }
 
         public async Task<int> GetTotalExpense()
         {
-            var query = "SELECT sum(amount) as Total_transactions,(if(accountId=1,'INCOME','EXPENSE')) AS transaction_type FROM ps_ac_accounttransaction where accountId=2 and date between CURDATE() - INTERVAL 30 DAY AND CURDATE();";
+            var query = "SELECT sum(amount) as Total_transactions,(if(accountId=1,'INCOME','EXPENSE')) AS transaction_type FROM ps_ac_accounttransaction where accountId=2;";
             return await _dbContext.GetCount(query);
         }
     }
